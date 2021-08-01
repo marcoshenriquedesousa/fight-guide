@@ -11,4 +11,16 @@ describe('JogoController', () => {
         expect(respostaHttp.codigoStatus).toBe(400)
         expect(respostaHttp.corpo).toEqual(new Error('falta o parametro: titulo'))
     })
+
+    test('Retorna 400 se a imagem não for passado', () => {
+        const sut = new JogoController()
+        const requisicaoHttp = {
+            corpo: {
+                titulo: 'titulo_qualquer'
+            }
+        }
+        const respostaHttp = sut.salvar(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(400)
+        expect(respostaHttp.corpo).toEqual(new Error('falta o parametro: imagem'))
+    })
 })
