@@ -1,7 +1,19 @@
 import { JogoController } from "./jogo"
+
+interface SutTipos {
+    sut: JogoController
+}
+
+const fazerSut = (): SutTipos => {
+    const sut = new JogoController()
+    return {
+        sut
+    }
+}
+
 describe('JogoController', () => {
     test('Retorna 400 se o titulo não for passado', () => {
-        const sut = new JogoController()
+        const { sut } = fazerSut()
         const requisicaoHttp = {
             corpo: {
                 imagem: 'imagem_qualquer'
@@ -13,7 +25,7 @@ describe('JogoController', () => {
     })
 
     test('Retorna 400 se a imagem não for passado', () => {
-        const sut = new JogoController()
+        const { sut } = fazerSut()
         const requisicaoHttp = {
             corpo: {
                 titulo: 'titulo_qualquer'
