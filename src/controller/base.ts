@@ -2,7 +2,8 @@ export class BaseControlador {
     salvar(modelo: any): any {
         if(!modelo) {
             return {
-              status: 400
+              codigoStatus: 400,
+              erro: new Error('Modelo invalido')
             }
         }    
     }

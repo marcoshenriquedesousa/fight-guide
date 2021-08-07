@@ -5,6 +5,7 @@ describe('BaseControlador', () => {
         const sut = new BaseControlador()
         const requisicaoHttp = null
         const respostaHttp = sut.salvar(requisicaoHttp)
-        expect(respostaHttp.status).toBe(400) 
+        expect(respostaHttp.codigoStatus).toBe(400)
+        expect(respostaHttp.erro).toEqual(new Error('Modelo invalido')) 
     })  
 })
