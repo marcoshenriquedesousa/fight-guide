@@ -1,4 +1,4 @@
-export abstract class BaseNotification {
+export abstract class NotificacaoBase {
 
     notifications: Array<{ message: string }>;
   
@@ -48,5 +48,4 @@ export abstract class BaseNotification {
     valid(): boolean {
       return this.notifications.length == 0;
     }
-  
   }

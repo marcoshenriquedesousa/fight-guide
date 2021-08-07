@@ -1,19 +1,17 @@
 import { Request } from 'express'
+import { Jogo } from '../entity/Jogo'
+import { BaseControlador } from './base'
 
-export class JogoController {
-    salvar(requesicao: Request): any {
-        if(!requesicao.corpo.titulo) {
-            return {
-                codigoStatus: 400,
-                corpo: new Error('falta o parametro: titulo')
-            }
-        }
+export class JogoController extends BaseControlador<Jogo> {
 
-        if(!requesicao.corpo.imagem) {
-            return {
-                codigoStatus: 400,
-                corpo: new Error('falta o parametro: imagem')
-            }
-        }
+    constructor(){
+        super(Jogo)
+    }
+
+    salvarJogo(requesicao: Request): any {
+        let _jogo = <Jogo>requesicao.corpo
+        super.isRequired(_jogo.titulo, 'falta o parametro: titulo')
+        super.isRequired(_jogo.imagem, 'falta o parametro: imagem')
+        return super.salvar(_jogo);
     }
 }
