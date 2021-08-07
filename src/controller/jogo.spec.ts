@@ -11,7 +11,7 @@ const fazerSut = (): SutTipos => {
     }
 }
 
-describe('JogoController', () => {
+describe('JogoControlador', () => {
     test('Retorna 400 se o titulo não for passado', () => {
         const { sut } = fazerSut()
         const requisicaoHttp = {
