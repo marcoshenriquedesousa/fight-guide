@@ -1,5 +1,4 @@
 import { JogoController } from "./jogo"
-
 interface TipoStub {
     sut: JogoController
 }
@@ -14,7 +13,7 @@ const constroiSut = (): TipoStub => {
 
 describe('JogoControlador', () => {
     test('Retorna 400 se o titulo não for passado', () => {
-        const {sut} = constroiSut()
+        const { sut } = constroiSut()
         const requisicaoHttp = {
             corpo: {
                 imagem: 'imagem_qualquer'
@@ -22,11 +21,11 @@ describe('JogoControlador', () => {
         }
         const respostaHttp = sut.salvarJogo(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(400)
-        expect(respostaHttp.corpo[0].message).toEqual('falta o parametro: titulo')
+        expect(respostaHttp.corpo.message).toEqual('falta o parametro: titulo')
     })
 
     test('Retorna 400 se a imagem não for passado', () => {
-        const {sut} = constroiSut()
+        const { sut } = constroiSut()
         const requisicaoHttp = {
             corpo: {
                 titulo: 'titulo_qualquer'
@@ -34,6 +33,6 @@ describe('JogoControlador', () => {
         }
         const respostaHttp = sut.salvarJogo(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(400)
-        expect(respostaHttp.corpo[0].message).toEqual('falta o parametro: imagem')
+        expect(respostaHttp.corpo.message).toEqual('falta o parametro: imagem')
     })
 })

@@ -4,7 +4,6 @@ import { NotificacaoBase } from "../entity/NotificacaoBase";
 export abstract class BaseControlador<T> extends NotificacaoBase {
 
     // private _repository: Repository<T>
-
     constructor(entidade: any) {
         super()
         // this._repository = getRepository<T>(entidade)
@@ -16,7 +15,7 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
 
         else return {
             codigoStatus: 400,
-            corpo: this.notifications
+            corpo: this.notifications[0]
         }
     }
 }
