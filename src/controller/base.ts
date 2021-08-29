@@ -1,17 +1,20 @@
 import { Request } from 'express';
+import { getRepository, Repository } from 'typeorm';
 import { NotificacaoBase } from "../entity/NotificacaoBase";
 
 export abstract class BaseControlador<T> extends NotificacaoBase {
 
-    // private _repository: Repository<T>
+    private _repository: Repository<T>
     constructor(entidade: any) {
         super()
-        // this._repository = getRepository<T>(entidade)
+        this._repository = getRepository<T>(entidade)
     }
 
-    salvar(modelo: any) {
-
-        if (this.valid()) return { message: "Salvo com sucesso" }
+    async salvar(modelo: any) {
+        if (this.valid()) return {
+            codigoStatus: 200,
+            corpo: await this._repository.save(modelo)
+        }
 
         else return {
             codigoStatus: 400,
