@@ -39,8 +39,8 @@ describe('PersonagemControlador', () => {
             body: {
                 nome: 'nome_qualquer',
                 imagem: 'imagem_qualquer',
-                jogoUid: 'Uid_jogo_qualquer',
-                listaMovimento: 'lista_qualquer'
+                listaMovimento: 'lista_qualquer',
+                jogoUid: 'Uid_jogo_qualquer'
             }
         }
         const respostaHttp =  await sut.salvarPersonagem(requisicaoHttp)
@@ -54,12 +54,27 @@ describe('PersonagemControlador', () => {
             body: {
                 nome: 'nome_qualquer',
                 sobreNome: 'sobrenome_qualquer',
-                jogoUid: 'Uid_jogo_qualquer',
-                listaMovimento: 'lista_qualquer'
+                listaMovimento: 'lista_qualquer',
+                jogoUid: 'Uid_jogo_qualquer'
             }
         }
         const respostaHttp =  await sut.salvarPersonagem(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(400)
         expect(respostaHttp.body.mensagem).toEqual('falta o parametro: imagem')
+    })
+
+    test('retorna 400 se a listaMovimento não for passado', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                nome: 'nome_qualquer',
+                sobreNome: 'sobrenome_qualquer',
+                imagem: 'imagem_qualquer',
+                jogoUid: 'Uid_jogo_qualquer'
+            }
+        }
+        const respostaHttp =  await sut.salvarPersonagem(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(400)
+        expect(respostaHttp.body.mensagem).toEqual('falta o parametro: listaMovimento')
     })
 })
