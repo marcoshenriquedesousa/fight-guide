@@ -46,17 +46,17 @@ describe('JogoControlador', () => {
     //     const { sut } = constroiSut()
     //     const requisicaoHttp = {
     //         body: {
+    //             uid: 'uid_valido',
     //             titulo: 'titulo_valido',
     //             imagem: 'imagem_valida'
     //         }
     //     }
     //     const respostaHttp = await sut.salvarJogo(requisicaoHttp)
-    //     const uid = respostaHttp.body.uid
     //     const creatAt = respostaHttp.body.createAt
     //     const updateAt = respostaHttp.body.updateAt
     //     expect(respostaHttp.codigoStatus).toBe(200)
     //     expect(respostaHttp.body).toEqual({
-    //         uid: uid,
+    //         uid: 'uid_valido',
     //         titulo: 'titulo_valido',
     //         imagem: 'imagem_valida',
     //         deleted: false,

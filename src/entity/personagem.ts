@@ -16,8 +16,6 @@ export class Personagem extends EntidadeBase{
     @Column()
     listaMovimento: string
 
-    @Column()
-    jogoUid: string
-    // @ManyToOne(()=> Jogo, {eager: true})
-    // jogoUid: Jogo;
+    @ManyToOne(() => Jogo, {eager: true})
+    jogo: Jogo;
 }
