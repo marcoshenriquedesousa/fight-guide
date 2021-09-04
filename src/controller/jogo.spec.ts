@@ -16,6 +16,8 @@ const constroiSut = (): TipoStub => {
     }
 }
 
+let uid = ""
+
 
 describe('JogoControlador', () => {
     test('Retorna 400 se o titulo não for passado', async () => {
@@ -51,7 +53,7 @@ describe('JogoControlador', () => {
             }
         }
         const respostaHttp = await sut.salvarJogo(requisicaoHttp)
-        const uid = respostaHttp.body.uid
+        uid = respostaHttp.body.uid
         const creatAt = respostaHttp.body.createAt
         const updateAt = respostaHttp.body.updateAt
         expect(respostaHttp.codigoStatus).toBe(200)
@@ -76,5 +78,23 @@ describe('JogoControlador', () => {
         const respostaHttp = await sut.salvar(requisicaoHttp.body)
         expect(respostaHttp.codigoStatus).toBe(400)
         expect(respostaHttp.body).toEqual('uid não encontrado')
+    })
+
+    test('Retorna 200 se o uid for encontrado', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                uid: uid,
+                titulo: 'titulo_editado'
+            }
+        }
+        const respostaHttp = await sut.salvar(requisicaoHttp.body)
+        const updateAt = respostaHttp.body.updateAt
+        expect(respostaHttp.codigoStatus).toBe(200)
+        expect(respostaHttp.body).toEqual({
+            uid: uid,
+            titulo: 'titulo_editado',
+            updateAt: updateAt
+        })
     })
 })
