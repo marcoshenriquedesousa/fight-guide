@@ -9,7 +9,8 @@ export class JogoController extends BaseControlador<Jogo> {
     }
 
     salvarJogo(requesicao: Request): any {
-        let _jogo = <Jogo>requesicao.corpo
+        console.log(requesicao.boby)
+        let _jogo = <Jogo>requesicao.body
         super.isRequired(_jogo.titulo, 'falta o parametro: titulo')
         super.isRequired(_jogo.imagem, 'falta o parametro: imagem')
         return super.salvar(_jogo);

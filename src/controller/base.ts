@@ -13,12 +13,12 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
     async salvar(modelo: any) {
         if (this.valid()) return {
             codigoStatus: 200,
-            corpo: await this._repository.save(modelo)
+            body: await this._repository.save(modelo)
         }
 
         else return {
             codigoStatus: 400,
-            corpo: this.notifications[0]
+            body: this.notifications[0]
         }
     }
 }
