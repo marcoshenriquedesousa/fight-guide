@@ -10,6 +10,21 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
     }
 
     async salvar(modelo: any) {
+        if (modelo.uid) {
+
+            delete modelo['createAt'];
+            delete modelo['updateAt'];
+            delete modelo['deleted'];
+
+            let _modelInDB = await this._repository.findOne(modelo.uid);
+            if (_modelInDB) {
+                Object.assign(_modelInDB, modelo);
+            } else return {
+                codigoStatus: 400,
+                body: 'uid não encontrado'
+            }
+        }
+
         if (this.valid()) return {
             codigoStatus: 200,
             body: await this._repository.save(modelo)
