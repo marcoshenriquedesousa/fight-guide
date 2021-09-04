@@ -13,6 +13,7 @@ export class PersonagemController extends BaseControlador<Personagem> {
         super.isRequired(_personagem.sobreNome, 'falta o parametro: sobreNome')
         super.isRequired(_personagem.imagem, 'falta o parametro: imagem')
         super.isRequired(_personagem.listaMovimento, 'falta o parametro: listaMovimento')
+        super.isRequired(_personagem.jogoUid, 'falta o parametro: jogoUid')
         return super.salvar(_personagem) 
     }
 }

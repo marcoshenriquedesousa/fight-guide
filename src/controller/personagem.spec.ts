@@ -77,4 +77,19 @@ describe('PersonagemControlador', () => {
         expect(respostaHttp.codigoStatus).toBe(400)
         expect(respostaHttp.body.mensagem).toEqual('falta o parametro: listaMovimento')
     })
+
+    test('retorna 400 se a jogoUid não for passado', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                nome: 'nome_qualquer',
+                sobreNome: 'sobrenome_qualquer',
+                imagem: 'imagem_qualquer',
+                listaMovimento: 'lista_qualquer',
+            }
+        }
+        const respostaHttp =  await sut.salvarPersonagem(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(400)
+        expect(respostaHttp.body.mensagem).toEqual('falta o parametro: jogoUid')
+    })
 })
