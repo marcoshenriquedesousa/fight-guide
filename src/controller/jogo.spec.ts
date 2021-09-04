@@ -65,16 +65,16 @@ describe('JogoControlador', () => {
         })
     })
 
-    // test('Retorna 400 se o uid não for encontrado', async () => {
-    //     const { sut } = constroiSut()
-    //     const requisicaoHttp = {
-    //         body: {
-    //             uid: 'uid_invalido',
-    //             titulo: 'titulo_invalido'
-    //         }
-    //     }
-    //     const respostaHttp = await sut.salvar(requisicaoHttp.body)
-    //     expect(respostaHttp.codigoStatus).toBe(400)
-    //     expect(respostaHttp.body).toEqual('uid não encontrado')
-    // })
+    test('Retorna 400 se o uid não for encontrado', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                uid: 'uid_invalido',
+                titulo: 'titulo_invalido'
+            }
+        }
+        const respostaHttp = await sut.salvar(requisicaoHttp.body)
+        expect(respostaHttp.codigoStatus).toBe(400)
+        expect(respostaHttp.body).toEqual('uid não encontrado')
+    })
 })
