@@ -32,4 +32,34 @@ describe('PersonagemControlador', () => {
         expect(respostaHttp.codigoStatus).toBe(400)
         expect(respostaHttp.body.mensagem).toEqual('falta o parametro: nome')
     })
+
+    test('retorna 400 se o sobreNome não for passado', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                nome: 'nome_qualquer',
+                imagem: 'imagem_qualquer',
+                jogoUid: 'Uid_jogo_qualquer',
+                listaMovimento: 'lista_qualquer'
+            }
+        }
+        const respostaHttp =  await sut.salvarPersonagem(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(400)
+        expect(respostaHttp.body.mensagem).toEqual('falta o parametro: sobreNome')
+    })
+
+    test('retorna 400 se a imagem não for passado', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                nome: 'nome_qualquer',
+                sobreNome: 'sobrenome_qualquer',
+                jogoUid: 'Uid_jogo_qualquer',
+                listaMovimento: 'lista_qualquer'
+            }
+        }
+        const respostaHttp =  await sut.salvarPersonagem(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(400)
+        expect(respostaHttp.body.mensagem).toEqual('falta o parametro: imagem')
+    })
 })

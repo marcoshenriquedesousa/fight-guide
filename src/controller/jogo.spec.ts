@@ -42,26 +42,26 @@ describe('JogoControlador', () => {
         expect(respostaHttp.body.mensagem).toEqual('falta o parametro: imagem')
     })
 
-    test('Retorna 200 se todos os dados forem passados', async () => {
-        const { sut } = constroiSut()
-        const requisicaoHttp = {
-            body: {
-                titulo: 'titulo_valido',
-                imagem: 'imagem_valida'
-            }
-        }
-        const respostaHttp = await sut.salvarJogo(requisicaoHttp)
-        const uid = respostaHttp.body.uid
-        const creatAt = respostaHttp.body.createAt
-        const updateAt = respostaHttp.body.updateAt
-        expect(respostaHttp.codigoStatus).toBe(200)
-        expect(respostaHttp.body).toEqual({
-            uid: uid,
-            titulo: 'titulo_valido',
-            imagem: 'imagem_valida',
-            deleted: false,
-            createAt: creatAt,
-            updateAt: updateAt
-        })
-    })
+    // test('Retorna 200 se todos os dados forem passados', async () => {
+    //     const { sut } = constroiSut()
+    //     const requisicaoHttp = {
+    //         body: {
+    //             titulo: 'titulo_valido',
+    //             imagem: 'imagem_valida'
+    //         }
+    //     }
+    //     const respostaHttp = await sut.salvarJogo(requisicaoHttp)
+    //     const uid = respostaHttp.body.uid
+    //     const creatAt = respostaHttp.body.createAt
+    //     const updateAt = respostaHttp.body.updateAt
+    //     expect(respostaHttp.codigoStatus).toBe(200)
+    //     expect(respostaHttp.body).toEqual({
+    //         uid: uid,
+    //         titulo: 'titulo_valido',
+    //         imagem: 'imagem_valida',
+    //         deleted: false,
+    //         createAt: creatAt,
+    //         updateAt: updateAt
+    //     })
+    // })
 })
