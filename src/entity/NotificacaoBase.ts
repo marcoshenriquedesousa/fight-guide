@@ -1,47 +1,47 @@
 export abstract class NotificacaoBase {
 
-    notifications: Array<{ message: string }>;
+    notifications: Array<{ mensagem: string }>;
   
     constructor() {
-      this.notifications = new Array<{ message: string }>();
+      this.notifications = new Array<{ mensagem: string }>();
     }
   
-    AddNotification(message: string): void {
-      this.notifications.push({ message: message });
+    AddNotification(mensagem: string): void {
+      this.notifications.push({ mensagem: mensagem });
     }
   
-    isTrue(value, message) {
+    isTrue(value, mensagem) {
       if (value)
-        this.notifications.push({ message: message });
+        this.notifications.push({ mensagem: mensagem });
     }
   
-    isRequired(value, message) {
+    isRequired(value, mensagem) {
       if (!value || value.length <= 0)
-        this.notifications.push({ message: message });
+        this.notifications.push({ mensagem: mensagem });
     }
   
-    hasMinLen(value, min, message) {
+    hasMinLen(value, min, mensagem) {
       if (!value || value.length < min)
-        this.notifications.push({ message: message });
+        this.notifications.push({ mensagem: mensagem });
     }
   
-    hasMaxLen(value, max, message) {
+    hasMaxLen(value, max, mensagem) {
       if (!value || value.length > max)
-        this.notifications.push({ message: message });
+        this.notifications.push({ mensagem: mensagem });
     }
   
-    isFixedLen(value, len, message) {
+    isFixedLen(value, len, mensagem) {
       if (value.length != len)
-        this.notifications.push({ message: message });
+        this.notifications.push({ mensagem: mensagem });
     }
   
-    isEmail(value, message) {
+    isEmail(value, mensagem) {
       var reg = new RegExp(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/);
       if (!reg.test(value))
-        this.notifications.push({ message: message });
+        this.notifications.push({ mensagem: mensagem });
     }
   
-    get allNotifications(): Array<{ message: string }> {
+    get allNotifications(): Array<{ mensagem: string }> {
       return this.notifications;
     }
   

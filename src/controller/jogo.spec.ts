@@ -27,7 +27,7 @@ describe('JogoControlador', () => {
         }
         const respostaHttp = await sut.salvarJogo(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(400)
-        expect(respostaHttp.body.message).toEqual('falta o parametro: titulo')
+        expect(respostaHttp.body.mensagem).toEqual('falta o parametro: titulo')
     })
 
     test('Retorna 400 se a imagem não for passado', async () => {
@@ -39,7 +39,7 @@ describe('JogoControlador', () => {
         }
         const respostaHttp = await sut.salvarJogo(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(400)
-        expect(respostaHttp.body.message).toEqual('falta o parametro: imagem')
+        expect(respostaHttp.body.mensagem).toEqual('falta o parametro: imagem')
     })
 
     test('Retorna 200 se todos os dados forem passados', async () => {

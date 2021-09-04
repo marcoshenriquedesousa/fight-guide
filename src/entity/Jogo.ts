@@ -4,8 +4,8 @@ import { EntidadeBase } from "./EntidadeBase";
 @Entity()
 export class Jogo extends EntidadeBase{
     @Column()
-    titulo: string;
+    titulo: string
 
     @Column()
-    imagem: string;
+    imagem: string
 }

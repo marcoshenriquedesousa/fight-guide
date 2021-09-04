@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { getRepository, Repository } from 'typeorm';
 import { NotificacaoBase } from "../entity/NotificacaoBase";
 
