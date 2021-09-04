@@ -5,9 +5,21 @@ beforeAll(async () => {
     await criaTypeOemCom()
 })
 
+interface TipoStub {
+    sut: PersonagemController
+}
+
+const constroiSut = (): TipoStub => {
+    const sut = new PersonagemController()
+    return {
+        sut,
+    }
+}
+
+
 describe('PersonagemControlador', () => {
     test('retorna 400 se o nome não for passado', async () => {
-        const personagem = new PersonagemController()
+        const { sut } = constroiSut()
         const requisicaoHttp = {
             body: {
                 sobreNome: 'sobrenome_qualquer',
@@ -16,7 +28,7 @@ describe('PersonagemControlador', () => {
                 listaMovimento: 'lista_qualquer'
             }
         }
-        const respostaHttp =  await personagem.salvarPersonagem(requisicaoHttp)
+        const respostaHttp =  await sut.salvarPersonagem(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(400)
         expect(respostaHttp.body.mensagem).toEqual('falta o parametro: nome')
     })
