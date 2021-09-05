@@ -162,6 +162,18 @@ describe('PersonagemControlador', () => {
         expect(respostaHttp.body).toHaveLength(1)
     })
 
+    test('Retorna 404 se não retorna o dado da consulta', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            params: {
+                id: 'Uid_invalido', 
+            }
+        }
+        const respostaHttp = await sut.retornaUm(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(404)
+        expect(respostaHttp.body).toEqual('Obejeto não encontrado')
+    })
+
     test('Retorna 200 se retorna dado da consulta', async () => {
         const { sut } = constroiSut()
         const requisicaoHttp = {

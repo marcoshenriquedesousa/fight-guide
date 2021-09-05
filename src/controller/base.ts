@@ -31,9 +31,17 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
     }
 
     async retornaUm(request: Request) {
-        return {
-            codigoStatus: 200,
-            body: await this._repository.findOne(request.params.id)
+        const resultado = await this._repository.findOne(request.params.id)
+        if (resultado) {
+            return {
+                codigoStatus: 200,
+                body: resultado
+            }
+        } else {
+            return {
+                codigoStatus: 404,
+                body: 'Obejeto não encontrado'
+            }
         }
     }
 
