@@ -5,6 +5,12 @@ import { JogoController } from "./jogo"
 beforeAll(async () => {
     await criaTypeOemCom()
 })
+
+let dadosSalvos = {
+    uid: '',
+    createAt: '',
+    updateAt: ''
+}
 interface TipoStub {
     sut: JogoController
 }
@@ -15,8 +21,6 @@ const constroiSut = (): TipoStub => {
         sut,
     }
 }
-
-let uid = ""
 
 
 describe('JogoControlador', () => {
@@ -53,37 +57,35 @@ describe('JogoControlador', () => {
             }
         }
         const respostaHttp = await sut.salvarJogo(requisicaoHttp)
-        uid = respostaHttp.body.uid
-        const creatAt = respostaHttp.body.createAt
-        const updateAt = respostaHttp.body.updateAt
+        dadosSalvos.uid = respostaHttp.body.uid
+        dadosSalvos.createAt = respostaHttp.body.createAt
+        dadosSalvos.updateAt = respostaHttp.body.updateAt
         expect(respostaHttp.codigoStatus).toBe(200)
         expect(respostaHttp.body).toEqual({
-            uid: uid,
+            uid: dadosSalvos.uid,
             titulo: 'titulo_valido',
             imagem: 'imagem_valida',
             deleted: false,
-            createAt: creatAt,
-            updateAt: updateAt
+            createAt: dadosSalvos.createAt,
+            updateAt: dadosSalvos.updateAt
         })
     })
 
     test('Retorna 200 se retorna todos os dados da consulta', async () => {
         const { sut } = constroiSut()
         const respostaHttp = await sut.todos()
-        const creatAt = respostaHttp.body[0].createAt
-        const updateAt = respostaHttp.body[0].updateAt
         expect(respostaHttp.codigoStatus).toBe(200)
         expect(respostaHttp.body).toEqual([{
-            uid: uid,
+            uid: dadosSalvos.uid,
             titulo: 'titulo_valido',
             imagem: 'imagem_valida',
             deleted: false,
-            createAt: creatAt,
-            updateAt: updateAt
+            createAt: dadosSalvos.createAt,
+            updateAt: dadosSalvos.updateAt
         }])
     })
 
-    test('Retorna 400 se o uid não for encontrado no update', async () => {
+    test('Retorna 404 se o uid não for encontrado no update', async () => {
         const { sut } = constroiSut()
         const requisicaoHttp = {
             body: {
@@ -100,7 +102,7 @@ describe('JogoControlador', () => {
         const { sut } = constroiSut()
         const requisicaoHttp = {
             body: {
-                uid: uid,
+                uid: dadosSalvos.uid,
                 titulo: 'titulo_editado'
             }
         }
@@ -108,13 +110,13 @@ describe('JogoControlador', () => {
         const updateAt = respostaHttp.body.updateAt
         expect(respostaHttp.codigoStatus).toBe(200)
         expect(respostaHttp.body).toEqual({
-            uid: uid,
+            uid: dadosSalvos.uid,
             titulo: 'titulo_editado',
             updateAt: updateAt
         })
     })
 
-    test('Retorna 400 se o uid não for encontrado na exclusão', async () => {
+    test('Retorna 404 se o uid não for encontrado na exclusão', async () => {
         const { sut } = constroiSut()
         const requisicaoHttp = {
             params: {
@@ -130,11 +132,18 @@ describe('JogoControlador', () => {
         const { sut } = constroiSut()
         const requisicaoHttp = {
             params: {
-                id: uid,
+                id: dadosSalvos.uid,
             }
         }
         const respostaHttp = await sut.excluir(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(200)
         expect(respostaHttp.body).toEqual('item excluido com sucesso')
+    })
+
+    test('Retorna 404 se não retorna dados da consulta', async () => {
+        const { sut } = constroiSut()
+        const respostaHttp = await sut.todos()
+        expect(respostaHttp.codigoStatus).toBe(404)
+        expect(respostaHttp.body).toEqual('Lista vazia')
     })
 })

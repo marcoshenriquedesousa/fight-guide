@@ -19,7 +19,12 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
             }
         });
 
-        return {
+        if (resultado.length == 0) {
+            return {
+                codigoStatus: 404,
+                body: 'Lista vazia'
+            }
+        } else return {
             codigoStatus: 200,
             body: resultado
         }
