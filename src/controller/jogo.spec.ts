@@ -22,7 +22,6 @@ const constroiSut = (): TipoStub => {
     }
 }
 
-
 describe('JogoControlador', () => {
     test('Retorna 400 se o titulo não for passado', async () => {
         const { sut } = constroiSut()

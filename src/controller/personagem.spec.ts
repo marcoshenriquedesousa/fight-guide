@@ -1,21 +1,27 @@
 import { criaTypeOemCom } from "../../utils/criaTypeOrmCon"
+import { JogoController } from "./jogo"
 import { PersonagemController } from "./personagem"
 
 beforeAll(async () => {
     await criaTypeOemCom()
 })
 
+let dadosSalvosJogo = {
+    uid: '',
+}
 interface TipoStub {
-    sut: PersonagemController
+    sut: PersonagemController,
+    sutJogo: JogoController
 }
 
 const constroiSut = (): TipoStub => {
     const sut = new PersonagemController()
+    const sutJogo = new JogoController()
     return {
         sut,
+        sutJogo
     }
 }
-
 
 describe('PersonagemControlador', () => {
     test('retorna 400 se o nome não for passado', async () => {
@@ -93,33 +99,56 @@ describe('PersonagemControlador', () => {
         expect(respostaHttp.body.mensagem).toEqual('falta o parametro: jogo')
     })
 
-    // test('Retorna 200 se todos os dados forem passados', async () => {
-    //     const { sut } = constroiSut()
-    //     const requisicaoHttp = {
-    //         body: {
-    //             nome: 'nome_valido',
-    //             sobreNome: 'sobreNome_valido',
-    //             imagem: 'imagem_valida',
-    //             listaMovimento: 'listaMovimeto_valido',
-    //             jogo: 'uid_valido'
-    //         }
-    //     }
-    //     const respostaHttp = await sut.salvarPersonagem(requisicaoHttp)
-    //     const uid = respostaHttp.body.uid
-    //     const creatAt = respostaHttp.body.createAt
-    //     const updateAt = respostaHttp.body.updateAt
-    //     expect(respostaHttp.codigoStatus).toBe(200)
-    //     expect(respostaHttp.body).toEqual(
-    //     {    
-    //         uid: uid,
-    //         nome: 'nome_valido',
-    //         sobreNome: 'sobreNome_valido',
-    //         imagem: 'imagem_valida',
-    //         listaMovimento: 'listaMovimeto_valido',
-    //         jogo: 'uid_valido',
-    //         deleted: false,
-    //         createAt: creatAt,
-    //         updateAt: updateAt
-    //     })
-    // })
+    test('Cria jogo para gerar um uid valido', async () => {
+        const { sutJogo } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                titulo: 'titulo_valido',
+                imagem: 'imagem_valida'
+            }
+        }
+        const respostaHttp = await sutJogo.salvarJogo(requisicaoHttp)
+        dadosSalvosJogo.uid = respostaHttp.body.uid
+        const creatAt = respostaHttp.body.createAt
+        const updateAt = respostaHttp.body.updateAt
+        expect(respostaHttp.codigoStatus).toBe(200)
+        expect(respostaHttp.body).toEqual({
+            uid: dadosSalvosJogo.uid,
+            titulo: 'titulo_valido',
+            imagem: 'imagem_valida',
+            deleted: false,
+            createAt: creatAt,
+            updateAt: updateAt
+        })
+    })
+
+    test('Retorna 200 se todos os dados forem passados', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                nome: 'nome_valido',
+                sobreNome: 'sobreNome_valido',
+                imagem: 'imagem_valida',
+                listaMovimento: 'listaMovimeto_valido',
+                jogo: dadosSalvosJogo.uid
+            }
+        }
+        const respostaHttp = await sut.salvarPersonagem(requisicaoHttp)
+        const uid = respostaHttp.body.uid
+        const creatAt = respostaHttp.body.createAt
+        const updateAt = respostaHttp.body.updateAt
+        expect(respostaHttp.codigoStatus).toBe(200)
+        expect(respostaHttp.body).toEqual(
+        {    
+            uid: uid,
+            nome: 'nome_valido',
+            sobreNome: 'sobreNome_valido',
+            imagem: 'imagem_valida',
+            listaMovimento: 'listaMovimeto_valido',
+            jogo: dadosSalvosJogo.uid,
+            deleted: false,
+            createAt: creatAt,
+            updateAt: updateAt
+        })
+    })
 })
