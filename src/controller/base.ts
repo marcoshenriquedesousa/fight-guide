@@ -31,8 +31,6 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
     }
 
     async retornaUm(request: Request) {
-
-        console.log("resultado::;", request.params.id)
         let resultado = await this._repository.findOne(request.params.id)
 
         if(!resultado) {

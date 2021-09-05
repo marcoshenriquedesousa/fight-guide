@@ -84,6 +84,30 @@ describe('JogoControlador', () => {
         }])
     })
 
+    test('Retorna 200 se retorna dado da consulta', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            params: {
+                id: dadosSalvos.uid, 
+            }
+        }
+        const respostaHttp = await sut.retornaUm(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(200)
+        expect(respostaHttp.body).not.toBeNull()
+    })
+
+    test('Retorna 404 se não retorna o dado da consulta', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            params: {
+                id: 'Uid_invalido', 
+            }
+        }
+        const respostaHttp = await sut.retornaUm(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(404)
+        expect(respostaHttp.body).toEqual('Obejeto não encontrado')
+    })
+
     test('Retorna 404 se o uid não for encontrado no update', async () => {
         const { sut } = constroiSut()
         const requisicaoHttp = {
