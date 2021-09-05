@@ -168,4 +168,22 @@ describe('PersonagemControlador', () => {
         expect(respostaHttp.codigoStatus).toBe(200)
         expect(respostaHttp.body).toHaveLength(1)
     })
+
+    test('Retorna 200 se o uid for encontrado no update', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                uid: dadosSalvos.uidPersonagem,
+                nome: 'nome_editado'
+            }
+        }
+        const respostaHttp = await sut.salvar(requisicaoHttp.body)
+        const updateAt = respostaHttp.body.updateAt
+        expect(respostaHttp.codigoStatus).toBe(200)
+        expect(respostaHttp.body).toEqual({
+            uid: dadosSalvos.uidPersonagem,
+            nome: 'nome_editado',
+            updateAt: updateAt
+        })
+    })
 })
