@@ -125,13 +125,6 @@ describe('PersonagemControlador', () => {
         })
     })
 
-    test('Retorna 404 se não retorna dados da consulta', async () => {
-        const { sut } = constroiSut()
-        const respostaHttp = await sut.todos()
-        expect(respostaHttp.codigoStatus).toBe(404)
-        expect(respostaHttp.body).toEqual('Lista vazia')
-    })
-
     test('Retorna 200 se todos os dados forem passados', async () => {
         const { sut } = constroiSut()
         const requisicaoHttp = {
@@ -167,6 +160,18 @@ describe('PersonagemControlador', () => {
         const respostaHttp = await sut.todos()
         expect(respostaHttp.codigoStatus).toBe(200)
         expect(respostaHttp.body).toHaveLength(1)
+    })
+
+    test('Retorna 200 se retorna dado da consulta', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            params: {
+                id: dadosSalvos.uidPersonagem, 
+            }
+        }
+        const respostaHttp = await sut.retornaUm(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(200)
+        expect(respostaHttp.body).not.toBeNull()
     })
 
     test('Retorna 200 se o uid for encontrado no update', async () => {
@@ -209,5 +214,12 @@ describe('PersonagemControlador', () => {
         const respostaHttp = await sut.excluir(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(200)
         expect(respostaHttp.body).toEqual('item excluido com sucesso')
+    })
+    
+    test('Retorna 404 se não retorna dados da consulta', async () => {
+        const { sut } = constroiSut()
+        const respostaHttp = await sut.todos()
+        expect(respostaHttp.codigoStatus).toBe(404)
+        expect(respostaHttp.body).toEqual('Lista vazia')
     })
 })

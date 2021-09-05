@@ -30,6 +30,13 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
         }
     }
 
+    async retornaUm(request: Request) {
+        return {
+            codigoStatus: 200,
+            body: await this._repository.findOne(request.params.id)
+        }
+    }
+
     async salvar(modelo: any) {
         if (modelo.uid) {
 
