@@ -67,7 +67,7 @@ describe('JogoControlador', () => {
         })
     })
 
-    test('Retorna 400 se o uid não for encontrado', async () => {
+    test('Retorna 400 se o uid não for encontrado no update', async () => {
         const { sut } = constroiSut()
         const requisicaoHttp = {
             body: {
@@ -76,11 +76,11 @@ describe('JogoControlador', () => {
             }
         }
         const respostaHttp = await sut.salvar(requisicaoHttp.body)
-        expect(respostaHttp.codigoStatus).toBe(400)
+        expect(respostaHttp.codigoStatus).toBe(404)
         expect(respostaHttp.body).toEqual('uid não encontrado')
     })
 
-    test('Retorna 200 se o uid for encontrado', async () => {
+    test('Retorna 200 se o uid for encontrado no update', async () => {
         const { sut } = constroiSut()
         const requisicaoHttp = {
             body: {
@@ -96,5 +96,17 @@ describe('JogoControlador', () => {
             titulo: 'titulo_editado',
             updateAt: updateAt
         })
+    })
+
+    test('Retorna 400 se o uid não for encontrado na exclusão', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            params: {
+                id: "Uid_invalido",
+            }
+        }
+        const respostaHttp = await sut.excluir(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(404)
+        expect(respostaHttp.body).toEqual('uid não encontrado')
     })
 })

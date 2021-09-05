@@ -1,5 +1,6 @@
 import { getRepository, Repository } from 'typeorm';
 import { NotificacaoBase } from "../entity/NotificacaoBase";
+import { Request } from 'express'
 
 export abstract class BaseControlador<T> extends NotificacaoBase {
 
@@ -20,7 +21,7 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
             if (_modelInDB) {
                 Object.assign(_modelInDB, modelo);
             } else return {
-                codigoStatus: 400,
+                codigoStatus: 404,
                 body: 'uid não encontrado'
             }
         }
@@ -34,5 +35,18 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
             codigoStatus: 400,
             body: this.notifications[0]
         }
+    }
+
+    async excluir(requisicao: Request) {
+        let uid = requisicao.params.id;
+        let modelo: any = await this._repository.findOne(uid);
+        if (modelo) {
+            modelo.deleted = true;
+            return this._repository.save(modelo);
+        } else
+            return {
+                codigoStatus: 404,
+                body: 'uid não encontrado'
+            }
     }
 }
