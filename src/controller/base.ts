@@ -42,11 +42,19 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
         let modelo: any = await this._repository.findOne(uid);
         if (modelo) {
             modelo.deleted = true;
-            return this._repository.save(modelo);
+            await this._repository.save(modelo)
+            return {
+                codigoStatus: 200,
+                body: 'item excluido com sucesso'
+            }
         } else
             return {
                 codigoStatus: 404,
                 body: 'uid não encontrado'
             }
+    }
+
+    get repository(): Repository<T> {
+        return this._repository
     }
 }

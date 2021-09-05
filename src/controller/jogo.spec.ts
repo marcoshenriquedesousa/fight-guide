@@ -109,4 +109,16 @@ describe('JogoControlador', () => {
         expect(respostaHttp.codigoStatus).toBe(404)
         expect(respostaHttp.body).toEqual('uid não encontrado')
     })
+
+    test('Retorna 200 se o uid for encontrado na exclusão', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            params: {
+                id: uid,
+            }
+        }
+        const respostaHttp = await sut.excluir(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(200)
+        expect(respostaHttp.body).toEqual('item excluido com sucesso')
+    })
 })
