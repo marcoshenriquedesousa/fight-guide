@@ -6,8 +6,11 @@ beforeAll(async () => {
     await criaTypeOemCom()
 })
 
-let dadosSalvosJogo = {
-    uid: '',
+let dadosSalvos = {
+    uidJogo: '',
+    uidPersonagem: '',
+    creatAt: '',
+    updateAt: ''
 }
 interface TipoStub {
     sut: PersonagemController,
@@ -108,12 +111,12 @@ describe('PersonagemControlador', () => {
             }
         }
         const respostaHttp = await sutJogo.salvarJogo(requisicaoHttp)
-        dadosSalvosJogo.uid = respostaHttp.body.uid
+        dadosSalvos.uidJogo = respostaHttp.body.uid
         const creatAt = respostaHttp.body.createAt
         const updateAt = respostaHttp.body.updateAt
         expect(respostaHttp.codigoStatus).toBe(200)
         expect(respostaHttp.body).toEqual({
-            uid: dadosSalvosJogo.uid,
+            uid: dadosSalvos.uidJogo,
             titulo: 'titulo_valido',
             imagem: 'imagem_valida',
             deleted: false,
@@ -130,25 +133,32 @@ describe('PersonagemControlador', () => {
                 sobreNome: 'sobreNome_valido',
                 imagem: 'imagem_valida',
                 listaMovimento: 'listaMovimeto_valido',
-                jogo: dadosSalvosJogo.uid
+                jogo: dadosSalvos.uidJogo
             }
         }
         const respostaHttp = await sut.salvarPersonagem(requisicaoHttp)
-        const uid = respostaHttp.body.uid
-        const creatAt = respostaHttp.body.createAt
-        const updateAt = respostaHttp.body.updateAt
+        dadosSalvos.uidPersonagem = respostaHttp.body.uid 
+        dadosSalvos.creatAt = respostaHttp.body.createAt
+        dadosSalvos.updateAt = respostaHttp.body.updateAt
         expect(respostaHttp.codigoStatus).toBe(200)
         expect(respostaHttp.body).toEqual(
         {    
-            uid: uid,
+            uid: dadosSalvos.uidPersonagem,
             nome: 'nome_valido',
             sobreNome: 'sobreNome_valido',
             imagem: 'imagem_valida',
             listaMovimento: 'listaMovimeto_valido',
-            jogo: dadosSalvosJogo.uid,
+            jogo: dadosSalvos.uidJogo,
             deleted: false,
-            createAt: creatAt,
-            updateAt: updateAt
+            createAt: dadosSalvos.creatAt,
+            updateAt: dadosSalvos.updateAt
         })
+    })
+
+    test('Retorna 200 se retorna todos os dados da consulta', async () => {
+        const { sut } = constroiSut()
+        const respostaHttp = await sut.todos()
+        expect(respostaHttp.codigoStatus).toBe(200)
+        expect(respostaHttp.body).toHaveLength(1)
     })
 })
