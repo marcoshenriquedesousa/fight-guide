@@ -125,6 +125,13 @@ describe('PersonagemControlador', () => {
         })
     })
 
+    test('Retorna 404 se não retorna dados da consulta', async () => {
+        const { sut } = constroiSut()
+        const respostaHttp = await sut.todos()
+        expect(respostaHttp.codigoStatus).toBe(404)
+        expect(respostaHttp.body).toEqual('Lista vazia')
+    })
+
     test('Retorna 200 se todos os dados forem passados', async () => {
         const { sut } = constroiSut()
         const requisicaoHttp = {
