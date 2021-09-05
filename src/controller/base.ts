@@ -10,6 +10,21 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
         this._repository = getRepository<T>(entidade)
     }
 
+
+    async todos() {
+
+        const resultado = await this._repository.find({
+            where: {
+                'deleted': false
+            }
+        });
+
+        return {
+            codigoStatus: 200,
+            body: resultado
+        }
+    }
+
     async salvar(modelo: any) {
         if (modelo.uid) {
 

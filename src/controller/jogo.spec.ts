@@ -67,6 +67,22 @@ describe('JogoControlador', () => {
         })
     })
 
+    test('Retorna 200 se retorna todos os dados da consulta', async () => {
+        const { sut } = constroiSut()
+        const respostaHttp = await sut.todos()
+        const creatAt = respostaHttp.body[0].createAt
+        const updateAt = respostaHttp.body[0].updateAt
+        expect(respostaHttp.codigoStatus).toBe(200)
+        expect(respostaHttp.body).toEqual([{
+            uid: uid,
+            titulo: 'titulo_valido',
+            imagem: 'imagem_valida',
+            deleted: false,
+            createAt: creatAt,
+            updateAt: updateAt
+        }])
+    })
+
     test('Retorna 400 se o uid não for encontrado no update', async () => {
         const { sut } = constroiSut()
         const requisicaoHttp = {
