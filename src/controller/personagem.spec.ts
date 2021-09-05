@@ -186,4 +186,16 @@ describe('PersonagemControlador', () => {
             updateAt: updateAt
         })
     })
+
+    test('Retorna 404 se o uid não for encontrado na exclusão', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            params: {
+                id: "Uid_invalido",
+            }
+        }
+        const respostaHttp = await sut.excluir(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(404)
+        expect(respostaHttp.body).toEqual('uid não encontrado')
+    })
 })
