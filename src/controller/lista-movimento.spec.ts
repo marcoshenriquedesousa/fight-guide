@@ -186,7 +186,7 @@ describe('ListaDeMovimentosController', () => {
         }
         const respostaHttp = await sut.retornaUm(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(404)
-        expect(respostaHttp.body).toEqual('Obejeto não encontrado')
+        expect(respostaHttp.mensagem).toEqual('Obejeto não encontrado')
     })
 
     test('Retorna 404 se o uid não for encontrado no update', async () => {
@@ -199,7 +199,7 @@ describe('ListaDeMovimentosController', () => {
         }
         const respostaHttp = await sut.salvar(requisicaoHttp.body)
         expect(respostaHttp.codigoStatus).toBe(404)
-        expect(respostaHttp.body).toEqual('uid não encontrado')
+        expect(respostaHttp.mensagem).toEqual('uid não encontrado')
     })
 
     test('Retorna 200 se o uid for encontrado no update', async () => {
@@ -229,7 +229,7 @@ describe('ListaDeMovimentosController', () => {
         }
         const respostaHttp = await sut.excluir(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(404)
-        expect(respostaHttp.body).toEqual('uid não encontrado')
+        expect(respostaHttp.mensagem).toEqual('uid não encontrado')
     })
 
     test('Retorna 200 se o uid for encontrado na exclusão', async () => {
@@ -241,13 +241,13 @@ describe('ListaDeMovimentosController', () => {
         }
         const respostaHttp = await sut.excluir(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(200)
-        expect(respostaHttp.body).toEqual('item excluido com sucesso')
+        expect(respostaHttp.mensagem).toEqual('item excluido com sucesso')
     })
 
     test('Retorna 404 se não retorna dados da consulta', async () => {
         const { sut } = constroiSut()
         const respostaHttp = await sut.todos()
         expect(respostaHttp.codigoStatus).toBe(404)
-        expect(respostaHttp.body).toEqual('Lista vazia')
+        expect(respostaHttp.mensagem).toEqual('Lista vazia')
     })
 })

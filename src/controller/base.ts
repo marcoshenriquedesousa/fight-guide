@@ -22,7 +22,7 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
         if (resultado.length == 0) {
             return {
                 codigoStatus: 404,
-                body: 'Lista vazia'
+                mensagem: 'Lista vazia'
             }
         } else return {
             codigoStatus: 200,
@@ -36,7 +36,7 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
         if(!resultado) {
             return {
                 codigoStatus: 404,
-                body: 'Obejeto não encontrado'
+                mensagem: 'Obejeto não encontrado'
             }
         } else {
             return {
@@ -58,7 +58,7 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
                 Object.assign(_modelInDB, modelo);
             } else return {
                 codigoStatus: 404,
-                body: 'uid não encontrado'
+                mensagem: 'uid não encontrado'
             }
         }
 
@@ -81,12 +81,12 @@ export abstract class BaseControlador<T> extends NotificacaoBase {
             await this._repository.save(modelo)
             return {
                 codigoStatus: 200,
-                body: 'item excluido com sucesso'
+                mensagem: 'item excluido com sucesso'
             }
         } else
             return {
                 codigoStatus: 404,
-                body: 'uid não encontrado'
+                mensagem: 'uid não encontrado'
             }
     }
 
