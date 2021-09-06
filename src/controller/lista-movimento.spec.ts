@@ -10,6 +10,7 @@ describe('ListaDeMovimentosController', () => {
     })
     
     let dadosSalvos = {
+        uid: '',
         uidJogo: '',
         uidPersonagem: '',
         createAt: '',
@@ -138,6 +139,33 @@ describe('ListaDeMovimentosController', () => {
             jogo: dadosSalvos.uidJogo,
             deleted: false,
             createAt: creatAt,
+            updateAt: updateAt
+        })
+    })
+
+    test('Retorna 200 se todos os dados forem passados', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                dificuldade: 'dificuldade_valido',
+                video: 'video_valida',
+                imagem: 'imagem_valida',
+                personagem: dadosSalvos.uidPersonagem,
+            }
+        }
+        const respostaHttp = await sut.SalvarLista(requisicaoHttp)
+        dadosSalvos.uid = respostaHttp.body.uid
+        const createAt = respostaHttp.body.createAt
+        const updateAt = respostaHttp.body.updateAt
+        expect(respostaHttp.codigoStatus).toBe(200)
+        expect(respostaHttp.body).toEqual({
+            uid: dadosSalvos.uid,
+            dificuldade: 'dificuldade_valido',
+            video: 'video_valida',
+            imagem: 'imagem_valida',
+            personagem: dadosSalvos.uidPersonagem,
+            deleted: false,
+            createAt: createAt,
             updateAt: updateAt
         })
     })
