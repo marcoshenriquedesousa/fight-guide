@@ -10,6 +10,7 @@ export class ListaDeMovimentoController extends BaseControlador<ListaMovimento>{
     async SalvarLista(requisicao: Request){
         const _listaMovimento = <ListaMovimento>requisicao.body
         super.isRequired(_listaMovimento.dificuldade, 'falta o parametro: dificuldade')
+        super.isRequired(_listaMovimento.imagem, 'falta o parametro: imagem')
         return super.salvar(_listaMovimento)
     }
 }
