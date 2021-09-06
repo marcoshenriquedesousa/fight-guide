@@ -14,5 +14,5 @@ export class ListaMovimento extends EntidadeBase{
     imagem: string
     
     @ManyToOne(() => Personagem, {eager: true})
-    jogo: Personagem;
+    personagem: Personagem;
 }

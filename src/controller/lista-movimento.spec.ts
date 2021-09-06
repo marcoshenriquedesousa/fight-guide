@@ -65,4 +65,18 @@ describe('ListaDeMovimentosController', () => {
         expect(respostaHttp.codigoStatus).toBe(400)
         expect(respostaHttp.body.mensagem).toEqual('falta o parametro: video')
     })
+
+    test('retorna 400 se a personagem não for passado', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                dificuldade: 'dificuldade_qualquer',
+                imagem: 'imagem_qualquer',
+                video: 'video_qualquer',
+            }
+        }
+        const respostaHttp = await sut.SalvarLista(requisicaoHttp)
+        expect(respostaHttp.codigoStatus).toBe(400)
+        expect(respostaHttp.body.mensagem).toEqual('falta o parametro: personagem')
+    })
 })
