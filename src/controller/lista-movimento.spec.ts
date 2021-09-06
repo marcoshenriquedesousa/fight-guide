@@ -177,7 +177,6 @@ describe('ListaDeMovimentosController', () => {
         expect(respostaHttp.body).toHaveLength(1)
     })
 
-
     test('Retorna 404 se não retorna o dado da consulta', async () => {
         const { sut } = constroiSut()
         const requisicaoHttp = {
@@ -188,5 +187,18 @@ describe('ListaDeMovimentosController', () => {
         const respostaHttp = await sut.retornaUm(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(404)
         expect(respostaHttp.body).toEqual('Obejeto não encontrado')
+    })
+
+    test('Retorna 404 se o uid não for encontrado no update', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                uid: 'uid_invalido',
+                dificuldade: 'dificuldade_invalido'
+            }
+        }
+        const respostaHttp = await sut.salvar(requisicaoHttp.body)
+        expect(respostaHttp.codigoStatus).toBe(404)
+        expect(respostaHttp.body).toEqual('uid não encontrado')
     })
 })
