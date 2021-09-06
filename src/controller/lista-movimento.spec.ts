@@ -201,4 +201,22 @@ describe('ListaDeMovimentosController', () => {
         expect(respostaHttp.codigoStatus).toBe(404)
         expect(respostaHttp.body).toEqual('uid não encontrado')
     })
+
+    test('Retorna 200 se o uid for encontrado no update', async () => {
+        const { sut } = constroiSut()
+        const requisicaoHttp = {
+            body: {
+                uid: dadosSalvos.uid,
+                dificuldade: 'dificuldade_editado'
+            }
+        }
+        const respostaHttp = await sut.salvar(requisicaoHttp.body)
+        const updateAt = respostaHttp.body.updateAt
+        expect(respostaHttp.codigoStatus).toBe(200)
+        expect(respostaHttp.body).toEqual({
+            uid: dadosSalvos.uid,
+            dificuldade: 'dificuldade_editado',
+            updateAt: updateAt
+        })
+    })
 })
