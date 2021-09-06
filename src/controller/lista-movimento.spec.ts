@@ -169,4 +169,11 @@ describe('ListaDeMovimentosController', () => {
             updateAt: updateAt
         })
     })
+
+    test('Retorna 200 se retorna todos os dados da consulta', async () => {
+        const { sut } = constroiSut()
+        const respostaHttp = await sut.todos()
+        expect(respostaHttp.codigoStatus).toBe(200)
+        expect(respostaHttp.body).toHaveLength(1)
+    })
 })
