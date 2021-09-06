@@ -11,6 +11,7 @@ export class ListaDeMovimentoController extends BaseControlador<ListaMovimento>{
         const _listaMovimento = <ListaMovimento>requisicao.body
         super.isRequired(_listaMovimento.dificuldade, 'falta o parametro: dificuldade')
         super.isRequired(_listaMovimento.imagem, 'falta o parametro: imagem')
+        super.isRequired(_listaMovimento.video, 'falta o parametro: video')
         return super.salvar(_listaMovimento)
     }
 }
