@@ -43,7 +43,7 @@ describe('ListaDeMovimentosController', () => {
                 personagemUid: 'Uid_personagem_qualquer'
             }
         }
-        const respostaHttp = await sut.SalvarLista(requisicaoHttp)
+        const respostaHttp = await sut.salvarLista(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(400)
         expect(respostaHttp.body.mensagem).toEqual('falta o parametro: dificuldade')
     })
@@ -57,7 +57,7 @@ describe('ListaDeMovimentosController', () => {
                 personagemUid: 'Uid_personagem_qualquer'
             }
         }
-        const respostaHttp = await sut.SalvarLista(requisicaoHttp)
+        const respostaHttp = await sut.salvarLista(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(400)
         expect(respostaHttp.body.mensagem).toEqual('falta o parametro: imagem')
     })
@@ -71,7 +71,7 @@ describe('ListaDeMovimentosController', () => {
                 personagemUid: 'Uid_personagem_qualquer'
             }
         }
-        const respostaHttp = await sut.SalvarLista(requisicaoHttp)
+        const respostaHttp = await sut.salvarLista(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(400)
         expect(respostaHttp.body.mensagem).toEqual('falta o parametro: video')
     })
@@ -85,7 +85,7 @@ describe('ListaDeMovimentosController', () => {
                 video: 'video_qualquer',
             }
         }
-        const respostaHttp = await sut.SalvarLista(requisicaoHttp)
+        const respostaHttp = await sut.salvarLista(requisicaoHttp)
         expect(respostaHttp.codigoStatus).toBe(400)
         expect(respostaHttp.body.mensagem).toEqual('falta o parametro: personagem')
     })
@@ -153,7 +153,7 @@ describe('ListaDeMovimentosController', () => {
                 personagem: dadosSalvos.uidPersonagem,
             }
         }
-        const respostaHttp = await sut.SalvarLista(requisicaoHttp)
+        const respostaHttp = await sut.salvarLista(requisicaoHttp)
         dadosSalvos.uid = respostaHttp.body.uid
         const createAt = respostaHttp.body.createAt
         const updateAt = respostaHttp.body.updateAt
